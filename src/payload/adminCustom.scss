@@ -1398,3 +1398,78 @@ button.list-controls__toggle-columns,
   color: #059669 !important;
   border: none !important;
 }
+
+/* ── 28. MOBILE RESPONSIVENESS & MEDIA QUERIES ─────────────────────────────── */
+@media (max-width: 900px) {
+  /* Reduce global padding on smaller screens */
+  .template-default__wrap,
+  .dashboard,
+  .page-wrapper,
+  .dashboard__wrap,
+  .collection-list,
+  .collection-edit,
+  .global-edit {
+    padding: 1rem 1rem 2rem 1rem !important;
+  }
+
+  /* Stack form wrapper vertically */
+  .collection-edit__edit-depth-1,
+  .collection-edit__wrapper {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Release sidebar fixed width and sticky positioning */
+  .collection-edit__sidebar,
+  .collection-edit__sidebar-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    position: static !important;
+    padding: 1.25rem !important;
+  }
+
+  /* Enable horizontal scrolling for tables */
+  .collection-list table,
+  table.table,
+  .table {
+    display: block !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+  }
+
+  /* Make header controls wrap nicely */
+  .collection-list__header,
+  .collection-edit__header,
+  .global-edit__header,
+  .list-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1rem !important;
+    
+    .list-controls__buttons-wrap, 
+    .list-controls__buttons {
+      width: 100% !important;
+      justify-content: flex-start !important;
+      flex-wrap: wrap !important;
+    }
+  }
+
+  /* Stack search filters and table controls */
+  .list-controls {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1rem !important;
+  }
+  
+  .search-filter,
+  .search-filter__wrap {
+    max-width: 100% !important;
+  }
+  
+  .list-controls__toggle-columns,
+  .list-controls__toggle-where,
+  button.list-controls__toggle-columns,
+  button.list-controls__toggle-where {
+    flex: 1 !important;
+  }
+}
