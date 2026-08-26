@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const Logo: React.FC = () => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '2rem', justifyContent: 'center' }}>
     <span
       style={{
         fontFamily: "'Playfair Display', Georgia, serif",

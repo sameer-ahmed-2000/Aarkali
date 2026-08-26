@@ -68,6 +68,19 @@ export default async function CreateAccount() {
           </div>
 
           <CreateAccountForm />
+
+          <div className={classes.formFooter}>
+            <p>
+              Already have an account?{' '}
+              <Link href="/login" className={classes.authLink}>
+                Sign In
+              </Link>
+            </p>
+          </div>
+
+          <div className={classes.backLink}>
+            <Link href="/">&larr; Back to Boutique Home</Link>
+          </div>
         </div>
       </div>
     </section>
