@@ -129,7 +129,7 @@ function ProductsContent() {
 
   // Filtered and sorted products
   const filtered = useMemo(() => {
-    let result = MOCK_PRODUCTS.filter(p => {
+    let result = CATALOG_PRODUCTS.filter(p => {
       if (selectedCategory && p.category !== selectedCategory) return false
       if (showSaleOnly && !p.isSale) return false
       if (showInStockOnly && !p.inStock) return false
@@ -159,7 +159,7 @@ function ProductsContent() {
     return result
   }, [selectedCategory, sortBy, priceRange, showSaleOnly, showInStockOnly, searchQuery])
 
-  const toggleWishlist = (product: typeof MOCK_PRODUCTS[0]) => {
+  const toggleWishlist = (product: CatalogProduct) => {
     if (isInWishlist(product.id)) {
       removeItem(product.id)
     } else {
