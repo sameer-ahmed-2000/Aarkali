@@ -1,0 +1,189 @@
+// Aarkali Boutique — Auth Pages (Login / Create Account)
+
+.authPage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Left Decorative Panel ────────────────────────────────────────────────────
+.leftPanel {
+  background: var(--gradient-hero);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 48px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 60%, rgba(205,133,90,0.25) 0%, transparent 60%);
+  }
+
+  @media (max-width: 900px) { display: none; }
+}
+
+.leftContent {
+  position: relative;
+  z-index: 1;
+  max-width: 380px;
+  width: 100%;
+}
+
+.leftLogo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  margin-bottom: 52px;
+}
+
+.leftLogoIcon {
+  font-size: 40px;
+  font-family: var(--font-playfair), serif;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style: italic;
+}
+
+.leftLogoText {
+  font-family: var(--font-playfair), serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.leftFeatures {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 48px;
+}
+
+.feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  h3 {
+    font-family: var(--font-playfair), serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 4px;
+  }
+
+  p {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.featureIconWrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--boutique-gold-300);
+  flex-shrink: 0;
+}
+
+.leftTrustBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-full);
+  color: var(--boutique-gold-300);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+// ─── Right Form Panel ──────────────────────────────────────────────────────────
+.rightPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  background: var(--theme-bg);
+
+  @media (max-width: 480px) { padding: 32px 20px; }
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 420px;
+}
+
+.formHeader {
+  margin-bottom: 36px;
+}
+
+.formTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(28px, 3.5vw, 38px);
+  font-weight: 700;
+  color: var(--theme-text);
+  margin: 0 0 10px;
+}
+
+.formSubtitle {
+  font-size: 15px;
+  color: var(--theme-text-muted);
+  margin: 0;
+}
+
+.formFooter {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--theme-text-muted);
+  text-align: center;
+}
+
+.authLink {
+  color: var(--theme-primary);
+  font-weight: 600;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+.forgotLink {
+  font-size: 13px;
+  color: var(--theme-text-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast);
+  &:hover { color: var(--theme-primary); }
+}
+
+.backLink {
+  margin-top: 24px;
+  text-align: center;
+
+  a {
+    font-size: 13px;
+    color: var(--theme-text-muted);
+    text-decoration: none;
+    &:hover { color: var(--theme-primary); }
+  }
+}

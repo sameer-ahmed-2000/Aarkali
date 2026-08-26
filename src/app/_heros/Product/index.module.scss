@@ -1,0 +1,297 @@
+// Product Hero Styles — Aarkali Boutique
+
+.productHero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  width: 100%;
+  padding-top: 48px;
+  padding-bottom: 64px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding-top: 24px;
+  }
+}
+
+.mediaWrapper {
+  position: relative;
+  min-height: 520px;
+  aspect-ratio: 3/4;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background-color: var(--boutique-plum-50);
+  border: 1px solid var(--theme-border-color);
+
+  @media (max-width: 900px) {
+    min-height: 380px;
+  }
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-hero);
+}
+
+.placeholderInner {
+  color: var(--boutique-gold-300);
+  font-family: var(--font-playfair), serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  padding: 24px;
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.categories {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.category {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--boutique-gold-600);
+}
+
+.ratingBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.ratingCount {
+  font-size: 13px;
+  color: var(--theme-text-muted);
+}
+
+.title {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 700;
+  color: var(--theme-text);
+  margin: 0 0 16px;
+  line-height: 1.25;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.stockBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: var(--color-success-50);
+  color: var(--color-success-600);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+
+  svg {
+    color: var(--color-success-500);
+  }
+}
+
+// ─── Size Section ─────────────────────────────────────────────────────────────
+.sizeSection {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--theme-border-color);
+}
+
+.sizeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sizeLabel {
+  font-size: 14px;
+  color: var(--theme-text);
+
+  strong {
+    color: var(--theme-primary);
+  }
+}
+
+.sizeGuideBtn {
+  background: none;
+  border: none;
+  color: var(--theme-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--boutique-plum-700);
+  }
+}
+
+.sizeOptions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sizeBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--theme-border-color);
+  background: var(--theme-surface-raised);
+  color: var(--theme-text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast);
+
+  &:hover {
+    border-color: var(--theme-primary);
+    color: var(--theme-primary);
+  }
+
+  &.sizeBtnActive {
+    border-color: var(--theme-primary);
+    background: var(--theme-primary);
+    color: #ffffff;
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+.description {
+  margin-bottom: 28px;
+
+  p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--theme-text-muted);
+    margin: 0;
+  }
+}
+
+// ─── Actions ──────────────────────────────────────────────────────────────────
+.actions {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 36px;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+}
+
+.addToCartButton {
+  flex: 1;
+}
+
+.wishlistBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--theme-border-color);
+  background: var(--theme-surface-raised);
+  color: var(--theme-text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-spring);
+
+  &:hover {
+    border-color: hsl(350, 70%, 55%);
+    color: hsl(350, 70%, 55%);
+    transform: translateY(-2px);
+  }
+
+  &.wishlistBtnActive {
+    border-color: hsl(350, 70%, 55%);
+    color: hsl(350, 70%, 55%);
+  }
+}
+
+// ─── Reassurances / Perks ─────────────────────────────────────────────────────
+.perksBox {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 24px;
+  background: var(--theme-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--theme-border-color);
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.perkItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  svg {
+    color: var(--boutique-gold-500);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--theme-text);
+    margin-bottom: 2px;
+  }
+
+  p {
+    font-size: 12px;
+    color: var(--theme-text-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+}

@@ -1,0 +1,288 @@
+// Aarkali Boutique — Footer Styles
+
+.footer {
+  background: var(--boutique-plum-950);
+  color: rgba(255, 255, 255, 0.75);
+  font-family: var(--font-inter), sans-serif;
+  width: 100%;
+}
+
+// ─── Top Section ─────────────────────────────────────────────────────────────
+.footerTop {
+  padding: 64px var(--gutter-h);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footerTopInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+  gap: 48px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 36px;
+
+    .brandCol { grid-column: 1 / -1; }
+    .newsletterCol { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  @media (max-width: 460px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Brand Column ─────────────────────────────────────────────────────────────
+.brandCol { display: flex; flex-direction: column; gap: 20px; }
+
+.footerLogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.footerLogoIcon {
+  font-size: 36px;
+  font-family: var(--font-playfair), serif;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style: italic;
+  line-height: 1;
+}
+
+.footerLogoText {
+  font-family: var(--font-playfair), serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.footerTagline {
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+  max-width: 340px;
+}
+
+.footerContact { display: flex; flex-direction: column; gap: 8px; }
+
+.contactItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  transition: color var(--duration-fast);
+  margin: 0;
+
+  svg {
+    color: var(--boutique-gold-400);
+    flex-shrink: 0;
+  }
+
+  &:hover { color: var(--boutique-gold-400); }
+}
+
+.footerSocials {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.socialIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all var(--duration-normal) var(--ease-spring);
+
+  &:hover {
+    background: var(--boutique-gold-500);
+    color: var(--boutique-plum-950);
+    border-color: transparent;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(205, 133, 90, 0.4);
+  }
+}
+
+// ─── Link Columns ────────────────────────────────────────────────────────────
+.linkCol { display: flex; flex-direction: column; gap: 16px; }
+
+.colHeading {
+  font-family: var(--font-playfair), serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.linkList { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.footerLink {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: all var(--duration-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover {
+    color: var(--boutique-gold-300);
+    padding-left: 4px;
+  }
+}
+
+// ─── Newsletter Column ────────────────────────────────────────────────────────
+.newsletterCol { display: flex; flex-direction: column; gap: 16px; }
+.newsletterText { font-size: 13px; color: rgba(255,255,255,0.65); margin: 0; line-height: 1.6; }
+
+.newsletterForm { display: flex; flex-direction: column; gap: 10px; }
+
+.newsletterInput {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--duration-fast);
+
+  &::placeholder { color: rgba(255, 255, 255, 0.4); }
+  &:focus { border-color: var(--boutique-gold-400); }
+}
+
+.newsletterBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--gradient-gold);
+  color: var(--boutique-plum-950);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-spring);
+
+  &:hover { transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+}
+
+.subscribedMsg {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  background: rgba(60, 209, 57, 0.12);
+  border: 1px solid rgba(60, 209, 57, 0.25);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  color: hsl(148, 60%, 60%);
+}
+
+.paymentSection { margin-top: 8px; }
+
+.paymentLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 10px;
+
+  svg {
+    color: var(--boutique-gold-400);
+  }
+}
+
+.paymentBadges { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.paymentBadge {
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.03em;
+  transition: all var(--duration-fast);
+
+  &:hover { background: rgba(255,255,255,0.15); color: #fff; }
+}
+
+// ─── Bottom Bar ──────────────────────────────────────────────────────────────
+.footerBottom {
+  padding: 20px var(--gutter-h);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.footerBottomInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  @media (max-width: 680px) { flex-direction: column; text-align: center; }
+}
+
+.copyright {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+
+  a {
+    color: var(--boutique-gold-400);
+    text-decoration: none;
+    &:hover { color: var(--boutique-gold-300); }
+  }
+}
+
+.policies {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+  a {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    transition: color var(--duration-fast);
+
+    &:hover { color: rgba(255, 255, 255, 0.75); }
+  }
+
+  @media (max-width: 680px) { justify-content: center; }
+}

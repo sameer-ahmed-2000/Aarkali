@@ -1,0 +1,153 @@
+// Aarkali Boutique — Theme Tokens (Light & Dark)
+
+:root,
+[data-theme=light] {
+  // ─── Semantic elevations ───────────────────────────────────────────────────
+  --theme-elevation-0:    var(--color-base-0);
+  --theme-elevation-50:   var(--color-base-50);
+  --theme-elevation-100:  var(--color-base-100);
+  --theme-elevation-150:  var(--color-base-150);
+  --theme-elevation-200:  var(--color-base-200);
+  --theme-elevation-250:  var(--color-base-250);
+  --theme-elevation-300:  var(--color-base-300);
+  --theme-elevation-350:  var(--color-base-350);
+  --theme-elevation-400:  var(--color-base-400);
+  --theme-elevation-450:  var(--color-base-450);
+  --theme-elevation-500:  var(--color-base-500);
+  --theme-elevation-550:  var(--color-base-550);
+  --theme-elevation-600:  var(--color-base-600);
+  --theme-elevation-650:  var(--color-base-650);
+  --theme-elevation-700:  var(--color-base-700);
+  --theme-elevation-750:  var(--color-base-750);
+  --theme-elevation-800:  var(--color-base-800);
+  --theme-elevation-850:  var(--color-base-850);
+  --theme-elevation-900:  var(--color-base-900);
+  --theme-elevation-950:  var(--color-base-950);
+  --theme-elevation-1000: var(--color-base-1000);
+
+  // ─── Semantic color shorthands ─────────────────────────────────────────────
+  --theme-success-50:   var(--color-success-50);
+  --theme-success-100:  var(--color-success-100);
+  --theme-success-300:  var(--color-success-300);
+  --theme-success-400:  var(--color-success-400);
+  --theme-success-500:  var(--color-success-500);
+  --theme-success-600:  var(--color-success-600);
+  --theme-success-700:  var(--color-success-700);
+
+  --theme-warning-50:   var(--color-warning-50);
+  --theme-warning-100:  var(--color-warning-100);
+  --theme-warning-400:  var(--color-warning-400);
+  --theme-warning-500:  var(--color-warning-500);
+
+  --theme-error-50:   var(--color-error-50);
+  --theme-error-100:  var(--color-error-100);
+  --theme-error-150:  var(--color-error-200);
+  --theme-error-500:  var(--color-error-500);
+  --theme-error-550:  var(--color-error-550);
+
+  // ─── Boutique specific ─────────────────────────────────────────────────────
+  --theme-bg:             hsl(285, 20%, 98%);
+  --theme-surface:        hsl(285, 18%, 96%);
+  --theme-surface-raised: hsl(0, 0%, 100%);
+  --theme-input-bg:       hsl(285, 15%, 96%);
+  --theme-text:           var(--boutique-plum-900);
+  --theme-text-muted:     hsl(285, 20%, 48%);
+  --theme-border-color:   hsl(285, 20%, 88%);
+
+  --theme-primary:        var(--boutique-plum-600);
+  --theme-primary-hover:  var(--boutique-plum-700);
+  --theme-accent:         var(--boutique-gold-500);
+  --theme-accent-hover:   var(--boutique-gold-600);
+
+  --theme-glass-bg:       rgba(255, 255, 255, 0.75);
+  --theme-glass-border:   rgba(255, 255, 255, 0.5);
+
+  --highlight-default-bg-color:   var(--color-success-50);
+  --highlight-default-text-color: var(--color-success-600);
+  --highlight-danger-bg-color:    var(--color-error-50);
+  --highlight-danger-text-color:  var(--color-error-500);
+
+  color-scheme: light;
+  color: var(--theme-text);
+
+  h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    color: var(--boutique-plum-700);
+    &:hover { color: var(--boutique-plum-900); }
+    &:visited { color: var(--boutique-plum-700); }
+  }
+}
+
+[data-theme=dark] {
+  // ─── Inverted elevations ───────────────────────────────────────────────────
+  --theme-elevation-0:    var(--color-base-1000);
+  --theme-elevation-50:   var(--color-base-950);
+  --theme-elevation-100:  var(--color-base-900);
+  --theme-elevation-150:  var(--color-base-850);
+  --theme-elevation-200:  var(--color-base-800);
+  --theme-elevation-250:  var(--color-base-750);
+  --theme-elevation-300:  var(--color-base-700);
+  --theme-elevation-350:  var(--color-base-650);
+  --theme-elevation-400:  var(--color-base-600);
+  --theme-elevation-450:  var(--color-base-550);
+  --theme-elevation-500:  var(--color-base-500);
+  --theme-elevation-550:  var(--color-base-450);
+  --theme-elevation-600:  var(--color-base-400);
+  --theme-elevation-650:  var(--color-base-350);
+  --theme-elevation-700:  var(--color-base-300);
+  --theme-elevation-750:  var(--color-base-250);
+  --theme-elevation-800:  var(--color-base-200);
+  --theme-elevation-850:  var(--color-base-150);
+  --theme-elevation-900:  var(--color-base-100);
+  --theme-elevation-950:  var(--color-base-50);
+  --theme-elevation-1000: var(--color-base-0);
+
+  --theme-success-50:   var(--color-success-950);
+  --theme-success-100:  var(--color-success-900);
+  --theme-success-300:  var(--color-success-700);
+  --theme-success-400:  var(--color-success-600);
+  --theme-success-500:  var(--color-success-500);
+  --theme-success-600:  var(--color-success-400);
+  --theme-success-700:  var(--color-success-300);
+
+  --theme-warning-50:   var(--color-warning-950);
+  --theme-warning-100:  var(--color-warning-900);
+  --theme-warning-400:  var(--color-warning-600);
+  --theme-warning-500:  var(--color-warning-500);
+
+  --theme-error-50:   var(--color-error-950);
+  --theme-error-100:  var(--color-error-900);
+  --theme-error-150:  var(--color-error-800);
+  --theme-error-500:  var(--color-error-500);
+  --theme-error-550:  var(--color-error-450);
+
+  // ─── Boutique dark mode ────────────────────────────────────────────────────
+  --theme-bg:             hsl(285, 55%, 6%);
+  --theme-surface:        hsl(285, 50%, 10%);
+  --theme-surface-raised: hsl(285, 45%, 13%);
+  --theme-input-bg:       hsl(285, 42%, 14%);
+  --theme-text:           hsl(285, 25%, 95%);
+  --theme-text-muted:     hsl(285, 18%, 62%);
+  --theme-border-color:   hsl(285, 35%, 22%);
+
+  --theme-primary:        var(--boutique-gold-400);
+  --theme-primary-hover:  var(--boutique-gold-300);
+  --theme-accent:         var(--boutique-blush-300);
+  --theme-accent-hover:   var(--boutique-blush-200);
+
+  --theme-glass-bg:       rgba(16, 7, 30, 0.72);
+  --theme-glass-border:   rgba(255, 255, 255, 0.1);
+
+  --highlight-default-bg-color:   var(--color-success-900);
+  --highlight-default-text-color: var(--color-success-400);
+  --highlight-danger-bg-color:    var(--color-error-900);
+  --highlight-danger-text-color:  var(--color-error-400);
+
+  color-scheme: dark;
+  color: var(--theme-text);
+
+  h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    color: var(--boutique-gold-400);
+    &:hover { color: var(--boutique-gold-300); }
+    &:visited { color: var(--boutique-gold-500); }
+  }
+}

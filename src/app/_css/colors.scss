@@ -1,0 +1,125 @@
+// Aarkali Boutique — Color System
+// Deep Plum + Rose-Gold luxury feminine palette
+
+:root {
+  // ─── Base Neutrals ────────────────────────────────────────────────────────
+  --color-base-0:    rgb(255, 255, 255);
+  --color-base-50:   rgb(250, 248, 252);
+  --color-base-100:  rgb(245, 241, 249);
+  --color-base-150:  rgb(237, 231, 244);
+  --color-base-200:  rgb(225, 218, 237);
+  --color-base-250:  rgb(210, 200, 228);
+  --color-base-300:  rgb(190, 178, 215);
+  --color-base-350:  rgb(168, 153, 199);
+  --color-base-400:  rgb(145, 127, 181);
+  --color-base-450:  rgb(120, 100, 160);
+  --color-base-500:  rgb(95, 72, 138);
+  --color-base-550:  rgb(75, 55, 112);
+  --color-base-600:  rgb(58, 40, 90);
+  --color-base-650:  rgb(44, 28, 72);
+  --color-base-700:  rgb(32, 18, 56);
+  --color-base-750:  rgb(23, 12, 42);
+  --color-base-800:  rgb(16, 7, 30);
+  --color-base-850:  rgb(11, 4, 22);
+  --color-base-900:  rgb(7, 2, 15);
+  --color-base-950:  rgb(4, 1, 9);
+  --color-base-1000: rgb(0, 0, 0);
+
+  // ─── Boutique Brand Colors ─────────────────────────────────────────────────
+  // Primary: Deep Plum
+  --boutique-plum-50:   hsl(285, 40%, 97%);
+  --boutique-plum-100:  hsl(285, 38%, 93%);
+  --boutique-plum-200:  hsl(285, 35%, 85%);
+  --boutique-plum-300:  hsl(285, 32%, 74%);
+  --boutique-plum-400:  hsl(285, 28%, 61%);
+  --boutique-plum-500:  hsl(285, 38%, 42%);
+  --boutique-plum-600:  hsl(285, 42%, 32%);
+  --boutique-plum-700:  hsl(285, 48%, 24%);
+  --boutique-plum-800:  hsl(285, 52%, 17%);
+  --boutique-plum-900:  hsl(285, 55%, 11%);
+  --boutique-plum-950:  hsl(285, 60%, 6%);
+
+  // Accent: Rose-Gold
+  --boutique-gold-50:   hsl(18, 60%, 97%);
+  --boutique-gold-100:  hsl(18, 58%, 93%);
+  --boutique-gold-200:  hsl(18, 55%, 85%);
+  --boutique-gold-300:  hsl(18, 52%, 74%);
+  --boutique-gold-400:  hsl(18, 58%, 65%);
+  --boutique-gold-500:  hsl(18, 65%, 56%);   /* Main rose-gold */
+  --boutique-gold-600:  hsl(18, 62%, 48%);
+  --boutique-gold-700:  hsl(18, 60%, 38%);
+  --boutique-gold-800:  hsl(18, 58%, 28%);
+  --boutique-gold-900:  hsl(18, 55%, 18%);
+
+  // Blush Pink (secondary accent)
+  --boutique-blush-100: hsl(340, 60%, 95%);
+  --boutique-blush-200: hsl(340, 55%, 88%);
+  --boutique-blush-300: hsl(340, 52%, 78%);
+  --boutique-blush-400: hsl(340, 50%, 68%);
+  --boutique-blush-500: hsl(340, 48%, 58%);
+
+  // ─── Semantic Colors ───────────────────────────────────────────────────────
+  --color-success-50:   hsl(148, 70%, 96%);
+  --color-success-100:  hsl(148, 65%, 90%);
+  --color-success-200:  hsl(148, 60%, 80%);
+  --color-success-300:  hsl(148, 55%, 65%);
+  --color-success-400:  hsl(148, 52%, 50%);
+  --color-success-500:  hsl(148, 55%, 38%);
+  --color-success-600:  hsl(148, 58%, 28%);
+  --color-success-700:  hsl(148, 60%, 20%);
+  --color-success-800:  hsl(148, 62%, 13%);
+  --color-success-850:  hsl(148, 64%, 9%);
+  --color-success-900:  hsl(148, 66%, 6%);
+  --color-success-950:  hsl(148, 68%, 3%);
+
+  --color-warning-50:   hsl(42, 100%, 96%);
+  --color-warning-100:  hsl(42, 95%, 90%);
+  --color-warning-200:  hsl(42, 90%, 78%);
+  --color-warning-300:  hsl(42, 88%, 65%);
+  --color-warning-400:  hsl(42, 85%, 52%);
+  --color-warning-500:  hsl(42, 88%, 42%);
+  --color-warning-600:  hsl(42, 85%, 32%);
+  --color-warning-700:  hsl(42, 82%, 22%);
+  --color-warning-800:  hsl(42, 80%, 14%);
+  --color-warning-850:  hsl(42, 78%, 9%);
+  --color-warning-900:  hsl(42, 76%, 6%);
+  --color-warning-950:  hsl(42, 74%, 3%);
+
+  --color-error-50:   hsl(350, 85%, 97%);
+  --color-error-100:  hsl(350, 80%, 92%);
+  --color-error-200:  hsl(350, 75%, 83%);
+  --color-error-300:  hsl(350, 72%, 72%);
+  --color-error-400:  hsl(350, 70%, 60%);
+  --color-error-500:  hsl(350, 72%, 48%);
+  --color-error-550:  hsl(350, 68%, 40%);
+  --color-error-600:  hsl(350, 65%, 32%);
+  --color-error-650:  hsl(350, 62%, 25%);
+  --color-error-700:  hsl(350, 60%, 18%);
+  --color-error-750:  hsl(350, 58%, 12%);
+  --color-error-800:  hsl(350, 56%, 8%);
+  --color-error-850:  hsl(350, 54%, 5%);
+  --color-error-900:  hsl(350, 52%, 3%);
+  --color-error-950:  hsl(350, 50%, 1%);
+
+  // ─── Legacy Brand Shims ────────────────────────────────────────────────────
+  --color-dark-50:       var(--boutique-plum-50);
+  --color-dark-60:       var(--boutique-plum-100);
+  --color-dark-500:      var(--boutique-plum-900);
+  --color-dark-500-5:    hsla(285, 55%, 11%, 0.05);
+  --color-white-500:     rgb(255, 255, 255);
+  --color-white-500-20:  rgba(255, 255, 255, 0.2);
+  --color-gray-500:      hsl(285, 10%, 60%);
+  --color-green-500:     var(--color-success-400);
+
+  // ─── Glass & Overlay ──────────────────────────────────────────────────────
+  --glass-light:    rgba(255, 255, 255, 0.12);
+  --glass-dark:     rgba(10, 4, 22, 0.55);
+  --glass-border:   rgba(255, 255, 255, 0.18);
+  --glass-shadow:   0 8px 32px rgba(74, 20, 120, 0.18);
+
+  // ─── Gradients ────────────────────────────────────────────────────────────
+  --gradient-primary:  linear-gradient(135deg, hsl(285, 42%, 28%) 0%, hsl(285, 55%, 14%) 100%);
+  --gradient-gold:     linear-gradient(135deg, hsl(18, 65%, 62%) 0%, hsl(32, 80%, 70%) 100%);
+  --gradient-hero:     linear-gradient(160deg, hsl(285, 55%, 8%) 0%, hsl(300, 40%, 18%) 50%, hsl(20, 50%, 20%) 100%);
+  --gradient-card:     linear-gradient(180deg, transparent 60%, rgba(10, 4, 22, 0.85) 100%);
+}

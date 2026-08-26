@@ -1,0 +1,270 @@
+// Orders Page Styles — Aarkali Boutique
+
+.pageWrapper {
+  min-height: 100vh;
+  background: var(--theme-bg);
+}
+
+.hero {
+  background: var(--gradient-hero);
+  padding: 64px var(--gutter-h) 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(205, 133, 90, 0.2) 0%, transparent 70%);
+  }
+}
+
+.heroTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 8px;
+  position: relative;
+}
+
+.heroSubtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  position: relative;
+}
+
+.ordersContainer {
+  padding-top: 40px;
+  padding-bottom: 80px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.orderCard {
+  background: var(--theme-surface-raised);
+  border: 1px solid var(--theme-border-color);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--duration-fast);
+
+  &:hover {
+    border-color: var(--boutique-plum-300);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: var(--theme-surface);
+  border-bottom: 1px solid var(--theme-border-color);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.orderIdInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.orderIdLabel {
+  font-family: var(--font-playfair), serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--theme-text);
+}
+
+.orderDate {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--theme-text-muted);
+
+  svg {
+    color: var(--boutique-gold-500);
+  }
+}
+
+.orderHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: var(--boutique-plum-100);
+  color: var(--boutique-plum-800);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.orderTotal {
+  font-family: var(--font-playfair), serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--boutique-plum-700);
+}
+
+.orderBody {
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.orderMetaRow {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.metaLabel {
+  color: var(--theme-text-muted);
+}
+
+.metaVal {
+  color: var(--theme-text);
+}
+
+.trackingCode {
+  font-family: var(--font-inter), monospace;
+  font-weight: 700;
+  color: var(--boutique-plum-700);
+  background: var(--boutique-plum-100);
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+  font-size: 12px;
+}
+
+.orderActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.trackBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--gradient-primary);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all var(--duration-fast);
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    color: #ffffff;
+  }
+}
+
+.viewBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--theme-surface);
+  border: 1px solid var(--theme-border-color);
+  color: var(--theme-text);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all var(--duration-fast);
+
+  &:hover {
+    border-color: var(--theme-primary);
+    color: var(--theme-primary);
+  }
+}
+
+// ─── Empty State ──────────────────────────────────────────────────────────────
+.noOrders {
+  text-align: center;
+  padding: 80px 20px;
+  background: var(--theme-surface-raised);
+  border: 1px solid var(--theme-border-color);
+  border-radius: var(--radius-xl);
+  max-width: 500px;
+  margin: 0 auto;
+
+  h3 {
+    font-family: var(--font-playfair), serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--theme-text);
+    margin: 0 0 10px;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--theme-text-muted);
+    line-height: 1.6;
+    margin: 0 0 24px;
+  }
+}
+
+.noOrdersIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  background: var(--boutique-plum-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.shopBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: var(--gradient-primary);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+  transition: all var(--duration-normal) var(--ease-spring);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: #ffffff;
+  }
+}

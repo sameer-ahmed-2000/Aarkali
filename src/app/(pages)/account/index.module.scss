@@ -1,0 +1,114 @@
+// Account Layout Styles — Aarkali Boutique
+
+.container {
+  min-height: 100vh;
+  background: var(--theme-bg);
+}
+
+.hero {
+  background: var(--gradient-hero);
+  padding: 64px var(--gutter-h) 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(205, 133, 90, 0.2) 0%, transparent 70%);
+  }
+}
+
+.heroTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 8px;
+  position: relative;
+}
+
+.heroSubtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  position: relative;
+}
+
+.gutterWrap {
+  padding-top: 40px;
+  padding-bottom: 80px;
+}
+
+.account {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 36px;
+  align-items: flex-start;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nav {
+  background: var(--theme-surface-raised);
+  border: 1px solid var(--theme-border-color);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 100px;
+}
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--theme-border-color);
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  color: var(--theme-text);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--duration-fast);
+  border-bottom: 1px solid var(--theme-border-color);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  svg {
+    color: var(--theme-text-muted);
+    transition: color var(--duration-fast);
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: var(--boutique-plum-50);
+    color: var(--theme-primary);
+
+    svg {
+      color: var(--theme-primary);
+    }
+  }
+}
+
+.contentArea {
+  background: var(--theme-surface-raised);
+  border: 1px solid var(--theme-border-color);
+  border-radius: var(--radius-xl);
+  padding: 36px;
+  box-shadow: var(--shadow-sm);
+
+  @media (max-width: 600px) {
+    padding: 24px 16px;
+  }
+}

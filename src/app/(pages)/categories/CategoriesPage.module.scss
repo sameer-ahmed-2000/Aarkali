@@ -1,0 +1,197 @@
+// Categories Explorer Page Styles — Aarkali Boutique
+
+.page {
+  min-height: 100vh;
+  background: var(--theme-bg);
+}
+
+.hero {
+  background: var(--gradient-hero);
+  padding: 72px var(--gutter-h) 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(205, 133, 90, 0.22) 0%, transparent 70%);
+  }
+}
+
+.heroTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(34px, 4.5vw, 56px);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 12px;
+  position: relative;
+}
+
+.heroSubtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  position: relative;
+}
+
+.container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 56px var(--gutter-h) 96px;
+
+  @media (max-width: 768px) {
+    padding: 36px 20px 64px;
+  }
+}
+
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.categoryCard {
+  background: var(--theme-surface-raised);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--theme-border-color);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--duration-normal) var(--ease-spring);
+  box-shadow: var(--shadow-sm);
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--boutique-gold-400);
+
+    .image {
+      transform: scale(1.08);
+    }
+
+    .exploreLink {
+      color: var(--boutique-gold-600);
+      transform: translateX(4px);
+    }
+  }
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: var(--boutique-plum-50);
+}
+
+.image {
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-spring);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 4, 22, 0.75) 0%, rgba(10, 4, 22, 0.1) 60%, transparent 100%);
+}
+
+.countBadge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 4px 12px;
+  background: rgba(10, 4, 22, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--boutique-gold-300);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+
+.cardContent {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.iconTitleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.iconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--boutique-plum-100);
+  color: var(--boutique-plum-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--boutique-plum-200);
+}
+
+.cardTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--theme-text);
+  margin: 0 0 4px;
+}
+
+.cardTagline {
+  font-size: 13px;
+  color: var(--theme-text-muted);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.subItems {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.subItemChip {
+  padding: 4px 10px;
+  background: var(--theme-surface);
+  border: 1px solid var(--theme-border-color);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  color: var(--theme-text-muted);
+}
+
+.exploreLink {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--theme-primary);
+  transition: all var(--duration-fast);
+}

@@ -1,0 +1,276 @@
+// Aarkali Boutique — Global Executive Admin Header Styles
+
+.admin-header-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 1.75rem;
+}
+
+.admin-header {
+  &__announcement-bar {
+    background: linear-gradient(90deg, #1c0832 0%, #321054 50%, #1c0832 100%) !important;
+    border: 1px solid rgba(224, 152, 116, 0.35) !important;
+    border-radius: 14px;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+    margin: 0 0 1.25rem 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  &__announcement-title {
+    color: #f3c299 !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  &__announcement-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    color: #f3c299 !important;
+    font-weight: 600;
+  }
+
+  &__announcement-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__visit-store-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.95rem;
+    background: rgba(224, 152, 116, 0.2) !important;
+    border: 1px solid #e09874 !important;
+    border-radius: 20px;
+    color: #ffffff !important;
+    text-decoration: none;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, #e09874 0%, #c87652 100%) !important;
+      color: #1e0933 !important;
+      transform: translateY(-1px);
+    }
+  }
+
+  &__bar {
+    background: var(--admin-header-bg, linear-gradient(135deg, #240b40 0%, #120422 100%)) !important;
+    border: 1px solid var(--admin-card-border, rgba(224, 152, 116, 0.35)) !important;
+    border-radius: 18px;
+    padding: 1.15rem 1.85rem;
+    box-shadow: var(--admin-card-shadow, 0 10px 36px rgba(18, 5, 36, 0.35)) !important;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  &__brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    text-decoration: none;
+  }
+
+  &__logo-icon {
+    font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    font-style: italic;
+    color: #e09874;
+    background: linear-gradient(135deg, #e09874 0%, #f3c299 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+
+  &__logo-text-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__logo-title {
+    font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--admin-text-primary, #ffffff);
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+  }
+
+  &__logo-sub {
+    font-size: 0.76rem;
+    color: var(--admin-accent, #e09874);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.15rem;
+    font-weight: 700;
+  }
+
+  &__breadcrumbs-wrap {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  &__breadcrumb-path {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--admin-accent-bright, #f3c299);
+    letter-spacing: 0.02em;
+  }
+
+  &__back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 1.1rem;
+    background: var(--admin-item-bg, rgba(224, 152, 116, 0.14)) !important;
+    border: 1px solid var(--admin-card-border, rgba(224, 152, 116, 0.35)) !important;
+    border-radius: 30px;
+    color: var(--admin-text-primary, #f3c299) !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(224, 152, 116, 0.3) !important;
+      color: var(--admin-text-primary, #ffffff) !important;
+      transform: translateX(-2px);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  &__theme-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 30px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &--dark {
+      background: linear-gradient(135deg, rgba(224, 152, 116, 0.2) 0%, rgba(200, 118, 82, 0.3) 100%) !important;
+      border: 1px solid #e09874 !important;
+      color: #f3c299 !important;
+
+      &:hover {
+        background: linear-gradient(135deg, #e09874 0%, #c87652 100%) !important;
+        color: #1e0933 !important;
+        transform: translateY(-2px);
+      }
+    }
+
+    &--light {
+      background: #3d1460 !important;
+      border: 1px solid #3d1460 !important;
+      color: #ffffff !important;
+
+      &:hover {
+        background: #1e0933 !important;
+        color: #f3c299 !important;
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  &__system-status {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(16, 185, 129, 0.12) !important;
+    border: 1px solid rgba(16, 185, 129, 0.35) !important;
+    padding: 0.45rem 0.95rem;
+    border-radius: 30px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #10b981 !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  &__status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #10b981;
+    box-shadow: 0 0 10px #10b981;
+  }
+
+  &__admin-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--admin-item-bg, rgba(255, 255, 255, 0.08)) !important;
+    border: 1px solid var(--admin-card-border, rgba(224, 152, 116, 0.2)) !important;
+    padding: 0.3rem 0.85rem 0.3rem 0.4rem;
+    border-radius: 30px;
+  }
+
+  &__avatar-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e09874 0%, #c87652 100%);
+    color: #1e0933;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.88rem;
+  }
+
+  &__admin-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--admin-text-primary, #ffffff) !important;
+  }
+
+  &__logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 1.1rem;
+    background: rgba(239, 68, 68, 0.15) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    border-radius: 30px;
+    color: #ef4444 !important;
+    font-size: 0.82rem;
+    font-weight: 700 !important;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #ef4444 !important;
+      color: #ffffff !important;
+      transform: translateY(-1px);
+    }
+  }
+}

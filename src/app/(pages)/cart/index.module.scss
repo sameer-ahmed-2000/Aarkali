@@ -1,0 +1,42 @@
+// Cart Outer Styles — Aarkali Boutique
+
+.pageWrapper {
+  min-height: 100vh;
+  background: var(--theme-bg);
+}
+
+.hero {
+  background: var(--gradient-hero);
+  padding: 64px var(--gutter-h) 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(205, 133, 90, 0.2) 0%, transparent 70%);
+  }
+}
+
+.heroTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 8px;
+  position: relative;
+}
+
+.heroSubtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  position: relative;
+}
+
+.container {
+  padding-top: 36px;
+  width: 100%;
+}
