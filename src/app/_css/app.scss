@@ -79,12 +79,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
-  opacity: 0;
-
-  &[data-theme=dark],
-  &[data-theme=light] {
   opacity: 1;
-}
 }
 
 html,

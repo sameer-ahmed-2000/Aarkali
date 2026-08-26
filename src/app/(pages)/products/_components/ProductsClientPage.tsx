@@ -18,277 +18,9 @@ import {
   FilterIcon,
 } from '../../../_components/Icons'
 
+import { CATALOG_PRODUCTS, CatalogProduct } from '../../../constants/catalog'
+
 import classes from './ProductsClientPage.module.scss'
-
-// Rich mock catalog with real ethnic photography & categorization
-const MOCK_PRODUCTS = [
-  // ── Sarees
-  {
-    id: '1',
-    name: 'Banarasi Silk Saree',
-    price: 4999,
-    originalPrice: 7500,
-    category: 'sarees',
-    categoryLabel: 'Sarees',
-    badge: 'Bestseller',
-    rating: 4.8,
-    reviews: 124,
-    image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: false,
-    isSale: true,
-  },
-  {
-    id: '5',
-    name: 'Kanjeevaram Pure Silk Saree',
-    price: 8999,
-    originalPrice: 12000,
-    category: 'sarees',
-    categoryLabel: 'Sarees',
-    badge: 'New',
-    rating: 4.7,
-    reviews: 68,
-    image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: true,
-    isSale: false,
-  },
-  {
-    id: '9',
-    name: 'Chanderi Handloom Silk Saree',
-    price: 3499,
-    originalPrice: 4500,
-    category: 'sarees',
-    categoryLabel: 'Sarees',
-    badge: null,
-    rating: 4.5,
-    reviews: 55,
-    image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: false,
-    isSale: true,
-  },
-  {
-    id: '13',
-    name: 'Georgette Embroidered Saree',
-    price: 2799,
-    originalPrice: 3999,
-    category: 'sarees',
-    categoryLabel: 'Sarees',
-    badge: 'Sale',
-    rating: 4.6,
-    reviews: 42,
-    image: 'https://images.unsplash.com/photo-1544441893-675973e31985?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: false,
-    isSale: true,
-  },
-
-  // ── Kurtis
-  {
-    id: '2',
-    name: 'Anarkali Festive Kurti Set',
-    price: 1899,
-    originalPrice: 2999,
-    category: 'kurtis',
-    categoryLabel: 'Kurtis',
-    badge: 'New',
-    rating: 4.6,
-    reviews: 87,
-    image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: true,
-    isSale: false,
-  },
-  {
-    id: '4',
-    name: 'Chanderi Silk Floral Kurti',
-    price: 1499,
-    originalPrice: 2200,
-    category: 'kurtis',
-    categoryLabel: 'Kurtis',
-    badge: 'Sale',
-    rating: 4.5,
-    reviews: 203,
-    image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: false,
-    isSale: true,
-  },
-  {
-    id: '7',
-    name: 'Cotton Hand-Block Printed Kurti',
-    price: 799,
-    originalPrice: 1200,
-    category: 'kurtis',
-    categoryLabel: 'Kurtis',
-    badge: 'Sale',
-    rating: 4.3,
-    reviews: 312,
-    image: 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: false,
-    isSale: true,
-  },
-  {
-    id: '10',
-    name: 'Flared Palazzo Kurti Ensemble',
-    price: 2199,
-    originalPrice: 3200,
-    category: 'kurtis',
-    categoryLabel: 'Kurtis',
-    badge: 'New',
-    rating: 4.4,
-    reviews: 77,
-    image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: true,
-    isSale: false,
-  },
-
-  // ── Lehengas
-  {
-    id: '3',
-    name: 'Bridal Velvet Lehenga Choli',
-    price: 12999,
-    originalPrice: 18000,
-    category: 'lehengas',
-    categoryLabel: 'Lehengas',
-    badge: 'Premium',
-    rating: 4.9,
-    reviews: 56,
-    image: 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: false,
-    isSale: false,
-  },
-  {
-    id: '6',
-    name: 'Party Wear Semi-Stitched Lehenga',
-    price: 5999,
-    originalPrice: 8500,
-    category: 'lehengas',
-    categoryLabel: 'Lehengas',
-    badge: 'Sale',
-    rating: 4.4,
-    reviews: 41,
-    image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=80&auto=format&fit=crop',
-    inStock: false,
-    isNew: false,
-    isSale: true,
-  },
-  {
-    id: '14',
-    name: 'Silk Brocade Festive Lehenga',
-    price: 9499,
-    originalPrice: 13500,
-    category: 'lehengas',
-    categoryLabel: 'Lehengas',
-    badge: 'New',
-    rating: 4.8,
-    reviews: 38,
-    image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: true,
-    isSale: false,
-  },
-
-  // ── Jewellery / Accessories
-  {
-    id: '11',
-    name: 'Antique Temple Gold Jhumkas',
-    price: 899,
-    originalPrice: 1200,
-    category: 'accessories',
-    categoryLabel: 'Jewellery',
-    badge: 'Bestseller',
-    rating: 4.7,
-    reviews: 143,
-    image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: false,
-    isSale: false,
-  },
-  {
-    id: '15',
-    name: 'Kundan Choker & Earring Set',
-    price: 1899,
-    originalPrice: 2600,
-    category: 'accessories',
-    categoryLabel: 'Jewellery',
-    badge: 'Premium',
-    rating: 4.9,
-    reviews: 94,
-    image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: true,
-    isSale: false,
-  },
-
-  // ── Dupattas
-  {
-    id: '8',
-    name: 'Phulkari Embroidered Silk Dupatta',
-    price: 699,
-    originalPrice: 999,
-    category: 'dupattas',
-    categoryLabel: 'Dupattas',
-    badge: 'New',
-    rating: 4.6,
-    reviews: 89,
-    image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: true,
-    isSale: false,
-  },
-  {
-    id: '16',
-    name: 'Bandhani Zari Border Dupatta',
-    price: 849,
-    originalPrice: 1199,
-    category: 'dupattas',
-    categoryLabel: 'Dupattas',
-    badge: 'Sale',
-    rating: 4.5,
-    reviews: 62,
-    image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: false,
-    isSale: true,
-  },
-
-  // ── Salwar Sets
-  {
-    id: '12',
-    name: 'Bandhani Silk Salwar Suit Set',
-    price: 1699,
-    originalPrice: 2500,
-    category: 'salwar-sets',
-    categoryLabel: 'Salwar Sets',
-    badge: 'Sale',
-    rating: 4.2,
-    reviews: 98,
-    image: 'https://images.unsplash.com/photo-1544441893-675973e31985?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: false,
-    isSale: true,
-  },
-  {
-    id: '17',
-    name: 'Chanderi Straight Salwar Suit',
-    price: 2499,
-    originalPrice: 3499,
-    category: 'salwar-sets',
-    categoryLabel: 'Salwar Sets',
-    badge: 'New',
-    rating: 4.7,
-    reviews: 51,
-    image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&q=80&auto=format&fit=crop',
-    inStock: true,
-    isNew: true,
-    isSale: false,
-  },
-]
 
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest First' },
@@ -299,13 +31,13 @@ const SORT_OPTIONS = [
 ]
 
 const CATEGORY_OPTIONS = [
-  { value: '', label: 'All Collections', count: MOCK_PRODUCTS.length },
-  { value: 'sarees', label: 'Sarees', count: MOCK_PRODUCTS.filter(p => p.category === 'sarees').length },
-  { value: 'kurtis', label: 'Kurtis', count: MOCK_PRODUCTS.filter(p => p.category === 'kurtis').length },
-  { value: 'lehengas', label: 'Lehengas', count: MOCK_PRODUCTS.filter(p => p.category === 'lehengas').length },
-  { value: 'accessories', label: 'Jewellery', count: MOCK_PRODUCTS.filter(p => p.category === 'accessories').length },
-  { value: 'dupattas', label: 'Dupattas', count: MOCK_PRODUCTS.filter(p => p.category === 'dupattas').length },
-  { value: 'salwar-sets', label: 'Salwar Sets', count: MOCK_PRODUCTS.filter(p => p.category === 'salwar-sets').length },
+  { value: '', label: 'All Collections', count: CATALOG_PRODUCTS.length },
+  { value: 'sarees', label: 'Sarees', count: CATALOG_PRODUCTS.filter(p => p.category === 'sarees').length },
+  { value: 'kurtis', label: 'Kurtis', count: CATALOG_PRODUCTS.filter(p => p.category === 'kurtis').length },
+  { value: 'lehengas', label: 'Lehengas', count: CATALOG_PRODUCTS.filter(p => p.category === 'lehengas').length },
+  { value: 'accessories', label: 'Jewellery', count: CATALOG_PRODUCTS.filter(p => p.category === 'accessories').length },
+  { value: 'dupattas', label: 'Dupattas', count: CATALOG_PRODUCTS.filter(p => p.category === 'dupattas').length },
+  { value: 'salwar-sets', label: 'Salwar Sets', count: CATALOG_PRODUCTS.filter(p => p.category === 'salwar-sets').length },
 ]
 
 function StarRating({ rating }: { rating: number }) {
@@ -721,7 +453,7 @@ function ProductsContent() {
 
                       <div className={classes.productHover}>
                         <Link
-                          href={`/products/${product.id}`}
+                          href={`/products/${product.slug || product.id}`}
                           className={classes.quickView}
                         >
                           Quick View
@@ -753,7 +485,7 @@ function ProductsContent() {
                     <div className={classes.productInfo}>
                       <p className={classes.productCat}>{product.categoryLabel}</p>
                       <h3 className={classes.productName}>
-                        <Link href={`/products/${product.id}`}>
+                        <Link href={`/products/${product.slug || product.id}`}>
                           {product.name}
                         </Link>
                       </h3>

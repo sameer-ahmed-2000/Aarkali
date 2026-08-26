@@ -11,21 +11,30 @@ import { Blocks } from '../../_components/Blocks'
 import { Gutter } from '../../_components/Gutter'
 import { Hero } from '../../_components/Hero'
 import { generateMeta } from '../../_utilities/generateMeta'
-
-// Payload Cloud caches all files through Cloudflare, so we don't need Next.js to cache them as well
-// This means that we can turn off Next.js data caching and instead rely solely on the Cloudflare CDN
-// To do this, we include the `no-cache` header on the fetch requests used to get the data for this page
-// But we also need to force Next.js to dynamically render this page on each request for preview mode to work
-// See https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamic
-// If you are not using Payload Cloud then this line can be removed, see `../../../README.md#cache`
-export const dynamic = 'force-dynamic'
-
+import { StaticContentPage } from './StaticContentPage'
 import Categories from '../../_components/Categories'
 import Promotion from '../../_components/Promotion'
 
 import classes from './index.module.scss'
 
-export default async function Page({ params: { slug = 'home' } }) {
+export const dynamic = 'force-dynamic'
+
+const KNOWN_STATIC_SLUGS = [
+  'about',
+  'contact',
+  'faq',
+  'returns',
+  'return-policy',
+  'size-guide',
+  'shipping-policy',
+  'privacy-policy',
+  'terms',
+  'sustainability',
+  'artisans',
+  'blog',
+]
+
+export default async function Page({ params: { slug = 'home' } }: { params: { slug: string } }) {
   const { isEnabled: isDraftMode } = draftMode()
 
   let page: Page | null = null
@@ -39,18 +48,15 @@ export default async function Page({ params: { slug = 'home' } }) {
     })
 
     categories = await fetchDocs<Category>('categories')
-  } catch (error) {
-    // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
-    // so swallow the error here and simply render the page with fallback data where necessary
-    // in production you may want to redirect to a 404  page or at least log the error somewhere
-    // console.error(error)
-  }
+  } catch (error) {}
 
-  // if no `home` page exists, render a static one using dummy content
-  // you should delete this code once you have a home page in the CMS
-  // this is really only useful for those who are demoing this template
   if (!page && slug === 'home') {
     page = staticHome
+  }
+
+  // If page not found in CMS, check if it is one of our luxury customer brand/support pages
+  if (!page && KNOWN_STATIC_SLUGS.includes(slug)) {
+    return <StaticContentPage slug={slug} />
   }
 
   if (!page) {
@@ -86,13 +92,14 @@ export default async function Page({ params: { slug = 'home' } }) {
 export async function generateStaticParams() {
   try {
     const pages = await fetchDocs<Page>('pages')
-    return pages?.map(({ slug }) => slug)
+    const cmsSlugs = pages?.map(({ slug }) => slug) || []
+    return Array.from(new Set([...cmsSlugs, ...KNOWN_STATIC_SLUGS]))
   } catch (error) {
-    return []
+    return KNOWN_STATIC_SLUGS
   }
 }
 
-export async function generateMetadata({ params: { slug = 'home' } }): Promise<Metadata> {
+export async function generateMetadata({ params: { slug = 'home' } }: { params: { slug: string } }): Promise<Metadata> {
   const { isEnabled: isDraftMode } = draftMode()
 
   let page: Page | null = null
@@ -103,15 +110,31 @@ export async function generateMetadata({ params: { slug = 'home' } }): Promise<M
       slug,
       draft: isDraftMode,
     })
-  } catch (error) {
-    // don't throw an error if the fetch fails
-    // this is so that we can render a static home page for the demo
-    // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
-    // in production you may want to redirect to a 404  page or at least log the error somewhere
-  }
+  } catch (error) {}
 
   if (!page && slug === 'home') {
     page = staticHome
+  }
+
+  if (!page && KNOWN_STATIC_SLUGS.includes(slug)) {
+    const titles: Record<string, string> = {
+      about: 'Our Story & Artisan Heritage | Aarkali Boutique',
+      contact: 'Contact Atelier & Concierge | Aarkali Boutique',
+      faq: 'Frequently Asked Questions | Aarkali Boutique',
+      returns: '7-Day Return & Exchange Policy | Aarkali Boutique',
+      'return-policy': 'Returns & Exchanges | Aarkali Boutique',
+      'size-guide': 'Ethnic Wear Size Guide & Chart | Aarkali Boutique',
+      'shipping-policy': 'Express Delivery & Shipping Policy | Aarkali Boutique',
+      'privacy-policy': 'Privacy Policy | Aarkali Boutique',
+      terms: 'Terms of Service | Aarkali Boutique',
+      sustainability: 'Sustainability & Ethical Handloom | Aarkali Boutique',
+      artisans: 'Artisan Partners & Weavers | Aarkali Boutique',
+    }
+
+    return {
+      title: titles[slug] || 'Aarkali Boutique',
+      description: 'Aarkali Boutique customer assistance, policies, and brand heritage.',
+    }
   }
 
   return generateMeta({ doc: page })

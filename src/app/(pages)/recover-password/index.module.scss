@@ -1,117 +1,159 @@
-@import '../../_css/common';
+// Recover Password SCSS — Aarkali Boutique
 
-.recoverPassword {
+.recoverPage {
   display: grid;
-  grid-template-columns: 1fr 45%;
-  height: 100vh;
-  font-family: var(--font-jost);
+  grid-template-columns: 1.1fr 1fr;
+  min-height: 100vh;
+  background: var(--theme-bg);
 
-  @include mid-break {
+  @media (max-width: 900px) {
     grid-template-columns: 1fr;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url('/assets/images/image-3.svg');
+  }
+}
+
+.leftPanel {
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(205, 133, 90, 0.22) 0%, transparent 70%);
+  }
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+
+.leftContent {
+  position: relative;
+  max-width: 440px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.brandLogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logoSymbol {
+  font-family: var(--font-playfair), serif;
+  font-size: 36px;
+  color: var(--boutique-gold-400);
+}
+
+.logoText {
+  font-family: var(--font-playfair), serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+
+.brandMessage {
+  h2 {
+    font-family: var(--font-playfair), serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 12px;
   }
 
   p {
-    color: var(--color-gray-500);
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
   }
 }
 
-.heroImg {
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-image: url('/assets/images/image-3.svg');
-
-  @include mid-break {
-    background: none;
-    display: flex;
-    justify-content: center;
-  }
-}
-
-.logo {
-  margin: 60px;
-  width: 30%;
-  min-width: 150px;
-  z-index: 10;
-
-  @include mid-break {
-    width: 45%;
-    margin: 10px;
-  }
-}
-
-.formWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.securityBadge {
+  display: inline-flex;
   align-items: center;
-  width: 100%;
-  height: 100%;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--boutique-gold-300);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  width: fit-content;
+}
 
-  @include mid-break {
-    justify-content: flex-start;
-    padding: 10px;
-  }
+// ─── Right Panel: Form ────────────────────────────────────────────────────────
+.rightPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
 }
 
 .formContainer {
-  max-width: 600px;
+  max-width: 460px;
   width: 100%;
-  padding: 50px;
-  border-radius: 10px;
-
-  @include mid-break {
-    backdrop-filter: blur(30px);
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  }
-
-  @include small-break {
-    padding: 30px;
-  }
-}
-
-
-.formTitle {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-
-  h3 {
-    margin-bottom: 8px;
-
-    @include mid-break {
-      font-size: 34px;
-      margin-bottom: 8px;
-    }
-  }
-
-  p {
-    text-align: center;
-    color: var(--color-dark-500);
-  }
-}
-
-.params {
-  margin-top: var(--base);
 }
 
 .backLink {
-  display: flex;
-  align-items: center;
-  margin-bottom: 30px;
-  gap: 4px;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--theme-primary);
+  text-decoration: none;
+  margin-bottom: 24px;
+  transition: color var(--duration-fast);
+
+  &:hover {
+    color: var(--boutique-plum-700);
+    text-decoration: underline;
+  }
+}
+
+.formHeader {
+  margin-bottom: 28px;
+}
+
+.formTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--theme-text);
+  margin: 0 0 8px;
+}
+
+.formSubtitle {
+  font-size: 14px;
+  color: var(--theme-text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.footerNote {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--theme-border-color);
+  text-align: center;
+  font-size: 14px;
+  color: var(--theme-text-muted);
+}
+
+.linkHighlight {
+  font-weight: 700;
+  color: var(--theme-primary);
   text-decoration: none;
 
-  p {
-    color: var(--color-dark-500);
-    font-size: 18px;
+  &:hover {
+    text-decoration: underline;
   }
 }

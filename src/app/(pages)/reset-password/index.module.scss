@@ -1,3 +1,74 @@
-.resetPassword {
-  margin-bottom: var(--block-padding);
+// Reset Password SCSS — Aarkali Boutique
+
+.page {
+  min-height: 100vh;
+  background: var(--theme-bg);
+  padding-bottom: 80px;
+}
+
+.hero {
+  background: var(--gradient-primary);
+  padding: 80px var(--gutter-h) 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(205, 133, 90, 0.18) 0%, transparent 70%);
+  }
+}
+
+.heroTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 12px;
+  position: relative;
+}
+
+.heroSubtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  position: relative;
+}
+
+.container {
+  max-width: 540px;
+  margin: 0 auto;
+  padding-top: 48px;
+}
+
+.card {
+  background: var(--theme-surface-raised);
+  border: 1px solid var(--theme-border-color);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  box-shadow: var(--shadow-lg);
+
+  @media (max-width: 600px) {
+    padding: 24px;
+  }
+}
+
+.backLinkRow {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--theme-border-color);
+  text-align: center;
+}
+
+.backLink {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--theme-primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

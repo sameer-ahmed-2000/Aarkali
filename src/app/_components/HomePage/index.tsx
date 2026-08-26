@@ -97,6 +97,7 @@ const categories = [
 const featuredProducts = [
   {
     id: 1,
+    slug: 'banarasi-silk-saree',
     name: 'Banarasi Silk Saree',
     price: 4999,
     originalPrice: 7500,
@@ -108,6 +109,7 @@ const featuredProducts = [
   },
   {
     id: 2,
+    slug: 'anarkali-festive-kurti-set',
     name: 'Anarkali Kurti Set',
     price: 1899,
     originalPrice: 2999,
@@ -119,6 +121,7 @@ const featuredProducts = [
   },
   {
     id: 3,
+    slug: 'bridal-velvet-lehenga-choli',
     name: 'Bridal Lehenga Choli',
     price: 12999,
     originalPrice: 18000,
@@ -130,6 +133,7 @@ const featuredProducts = [
   },
   {
     id: 4,
+    slug: 'chanderi-silk-floral-kurti',
     name: 'Chanderi Silk Kurti',
     price: 1499,
     originalPrice: 2200,
@@ -256,7 +260,7 @@ function ProductCard({ product }: { product: typeof featuredProducts[0] }) {
           <span className={`${classes.productBadge} ${classes[`badge${product.badge}`]}`}>{product.badge}</span>
         )}
         <div className={classes.productOverlay}>
-          <Link href={`/products/${product.id}`} className={classes.quickViewBtn}>Quick View</Link>
+          <Link href={`/products/${product.slug || product.id}`} className={classes.quickViewBtn}>Quick View</Link>
         </div>
         <button
           className={[classes.wishlistBtn, wishlisted && classes.wishlistBtnActive].filter(Boolean).join(' ')}
@@ -268,7 +272,11 @@ function ProductCard({ product }: { product: typeof featuredProducts[0] }) {
       </div>
       <div className={classes.productInfo}>
         <p className={classes.productCategory}>{product.category}</p>
-        <h3 className={classes.productName}>{product.name}</h3>
+        <h3 className={classes.productName}>
+          <Link href={`/products/${product.slug || product.id}`}>
+            {product.name}
+          </Link>
+        </h3>
         <div className={classes.productMeta}>
           <StarRating rating={product.rating} />
           <span className={classes.productReviews}>({product.reviews})</span>
