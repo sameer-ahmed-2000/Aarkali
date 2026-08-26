@@ -48,6 +48,11 @@
   }
 
   @include small-break {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @include extra-small-break {
     grid-template-columns: 100%;
   }
 }
