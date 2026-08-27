@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  siteName: 'Payload E-Commerce Template',
-  title: 'Payload E-Commerce Template',
-  description: 'An open-source e-commerce store built with Payload and Next.js.',
+  siteName: 'Aarkali Boutique',
+  title: 'Aarkali Boutique — Premium Indian Fashion',
+  description: 'Discover Aarkali Boutique — curated premium ethnic wear, designer sarees, kurtis, lehengas and more.',
   images: [
     {
-      url: 'https://payloadcms.com/images/og-image.jpg',
+      url: `${process.env.NEXT_PUBLIC_SERVER_URL || 'https://aarkali.in'}/favicon.svg`,
     },
   ],
 }
