@@ -1,14 +1,33 @@
+'use client'
+
 import React from 'react'
-import { Menu, Bell, Search } from 'lucide-react'
+import { Menu, Bell, Search, ArrowLeft } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 
 export function Topbar({ user, onMenuToggle }: { user: any, onMenuToggle?: () => void }) {
+  const pathname = usePathname()
+  const router = useRouter()
+  const isSubPage = pathname !== '/admin'
+
   return (
     <header className="h-16 border-b bg-card flex items-center justify-between px-4 md:px-6 shrink-0">
       <div className="flex items-center flex-1 gap-4">
         <button className="md:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground" onClick={onMenuToggle}>
           <Menu size={24} />
         </button>
-        <div className="hidden md:flex items-center bg-muted rounded-md px-3 py-1.5 w-full max-w-sm">
+
+        {isSubPage && (
+          <button 
+            onClick={() => router.back()} 
+            className="flex items-center gap-1.5 p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
+            title="Go Back"
+          >
+            <ArrowLeft size={20} />
+            <span className="hidden sm:inline text-sm font-medium">Back</span>
+          </button>
+        )}
+
+        <div className="hidden lg:flex items-center bg-muted rounded-md px-3 py-1.5 w-full max-w-sm">
           <Search size={18} className="text-muted-foreground mr-2 shrink-0" />
           <input 
             type="text" 

@@ -10,6 +10,7 @@ import {
   Tag,
   Ticket,
   LogOut,
+  X,
 } from 'lucide-react'
 
 const navItems = [
@@ -36,8 +37,14 @@ export function Sidebar({ isOpen, onClose }: { isOpen?: boolean; onClose?: () =>
       
       {/* Sidebar Content */}
       <aside className={`fixed inset-y-0 left-0 z-50 w-64 border-r bg-card flex flex-col h-full transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-      <div className="p-6">
+      <div className="p-6 flex items-center justify-between">
         <h2 className="text-2xl font-bold tracking-tight">Aarkali Admin</h2>
+        <button 
+          onClick={onClose}
+          className="md:hidden p-2 -mr-2 text-muted-foreground hover:text-foreground"
+        >
+          <X size={20} />
+        </button>
       </div>
       
       <nav className="flex-1 px-4 space-y-2 overflow-y-auto">
