@@ -1,3 +1,4 @@
+/* eslint-disable import/namespace */
 import { NextRequest, NextResponse } from 'next/server';
 import { dbConnect } from '@/lib/mongoose';
 import Product from '@/models/Product';
