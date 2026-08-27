@@ -1,69 +1,52 @@
 import React from 'react'
 import { Metadata } from 'next'
-import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 
-import { Product, Product as ProductType } from '../../../../payload/payload-types'
-import { fetchDoc } from '../../../_api/fetchDoc'
-import { fetchDocs } from '../../../_api/fetchDocs'
+import { dbConnect } from '@/lib/mongoose'
+import Product from '@/models/Product'
 import { Blocks } from '../../../_components/Blocks'
 import { PaywallBlocks } from '../../../_components/PaywallBlocks'
 import { ProductHero } from '../../../_heros/Product'
 import { generateMeta } from '../../../_utilities/generateMeta'
-import { getProductBySlugOrId, CATALOG_PRODUCTS } from '../../../constants/catalog'
 
 export const dynamic = 'force-dynamic'
 
 export default async function ProductPage({ params: { slug } }: { params: { slug: string } }) {
-  const { isEnabled: isDraftMode } = draftMode()
+  await dbConnect()
 
-  let product: Product | null = null
-  let catalogItem = getProductBySlugOrId(slug)
-
-  try {
-    product = await fetchDoc<Product>({
-      collection: 'products',
-      slug,
-      draft: isDraftMode,
-    })
-  } catch (error) {
-    console.error(error)
+  // Try finding by slug first, then by ID (fallback for old catalog IDs)
+  let mongooseProduct = await Product.findOne({ slug }).populate('categories').lean()
+  if (!mongooseProduct) {
+    // Try by _id if it's a valid object ID, else try finding where sku == slug
+    try {
+      mongooseProduct = await Product.findById(slug).populate('categories').lean()
+    } catch (e) {
+      mongooseProduct = await Product.findOne({ sku: slug }).populate('categories').lean()
+    }
   }
 
-  // Fallback to rich catalog product if CMS doc is not yet seeded
-  if (!product && catalogItem) {
-    product = {
-      id: catalogItem.id,
-      title: catalogItem.name,
-      slug: catalogItem.slug,
-      categories: [
-        {
-          id: catalogItem.category,
-          title: catalogItem.categoryLabel,
-          createdAt: '',
-          updatedAt: '',
-        } as any,
-      ],
-      meta: {
-        title: `${catalogItem.name} | Aarkali Boutique`,
-        description: catalogItem.shortDescription,
-        image: catalogItem.image as any,
-      },
-      createdAt: '',
-      updatedAt: '',
-      _status: 'published',
-    } as any
-  }
-
-  if (!product) {
+  if (!mongooseProduct) {
     notFound()
   }
+
+  // Convert to plain JSON and map Mongoose fields to the expected Product interface for ProductHero
+  // ProductHero expects Payload-style product (title, meta.image, etc.)
+  const product = JSON.parse(JSON.stringify({
+    ...mongooseProduct,
+    id: mongooseProduct._id,
+    title: mongooseProduct.title,
+    meta: {
+      title: `${mongooseProduct.title} | Aarkali`,
+      description: mongooseProduct.layout?.[1]?.shortDescription || '',
+      image: mongooseProduct.layout?.[0]?.url || '',
+    }
+  }))
 
   const { relatedProducts } = product
 
   return (
     <>
-      <ProductHero product={product} catalogData={catalogItem} />
+      <ProductHero product={product} catalogData={null} />
       {product?.enablePaywall && <PaywallBlocks productSlug={slug as string} disableTopPadding />}
       {relatedProducts && relatedProducts.length > 0 && (
         <Blocks
@@ -93,42 +76,33 @@ export default async function ProductPage({ params: { slug } }: { params: { slug
 }
 
 export async function generateStaticParams() {
-  try {
-    const products = await fetchDocs<ProductType>('products')
-    const cmsSlugs = products?.map(({ slug }) => slug) || []
-    const catalogSlugs = CATALOG_PRODUCTS.map(p => p.slug)
-    const catalogIds = CATALOG_PRODUCTS.map(p => p.id)
-    return Array.from(new Set([...cmsSlugs, ...catalogSlugs, ...catalogIds]))
-  } catch (error) {
-    return CATALOG_PRODUCTS.map(p => p.slug)
-  }
+  return [] // We are using force-dynamic, no need to statically generate
 }
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
-  const { isEnabled: isDraftMode } = draftMode()
-
-  let product: Product | null = null
-  const catalogItem = getProductBySlugOrId(slug)
-
-  try {
-    product = await fetchDoc<Product>({
-      collection: 'products',
-      slug,
-      draft: isDraftMode,
-    })
-  } catch (error) {}
-
-  if (!product && catalogItem) {
-    return {
-      title: `${catalogItem.name} — Handcrafted Ethnic Wear | Aarkali Boutique`,
-      description: catalogItem.shortDescription,
-      openGraph: {
-        title: `${catalogItem.name} | Aarkali Boutique`,
-        description: catalogItem.shortDescription,
-        images: [{ url: catalogItem.image }],
-      },
+  await dbConnect()
+  let mongooseProduct = await Product.findOne({ slug }).lean()
+  if (!mongooseProduct) {
+    try {
+      mongooseProduct = await Product.findById(slug).lean()
+    } catch (e) {
+      mongooseProduct = await Product.findOne({ sku: slug }).lean()
     }
   }
 
-  return generateMeta({ doc: product })
+  if (!mongooseProduct) {
+    return {
+      title: 'Product Not Found | Aarkali',
+    }
+  }
+
+  return {
+    title: `${mongooseProduct.title} | Aarkali Boutique`,
+    description: mongooseProduct.layout?.[1]?.shortDescription || '',
+    openGraph: {
+      title: `${mongooseProduct.title} | Aarkali Boutique`,
+      description: mongooseProduct.layout?.[1]?.shortDescription || '',
+      images: [{ url: mongooseProduct.layout?.[0]?.url || '' }],
+    },
+  }
 }

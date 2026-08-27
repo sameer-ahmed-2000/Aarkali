@@ -61,6 +61,14 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0;
+
+  @media (min-width: 961px) {
+    position: sticky;
+    top: 100px; // Offset for header
+    height: fit-content;
+    z-index: 10;
+  }
 }
 
 .mainImageWrapper {
@@ -153,7 +161,13 @@
   display: flex;
   gap: 12px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding-bottom: 8px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .thumbnailBtn {
@@ -186,6 +200,7 @@
 .detailsColumn {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .metaTop {
@@ -227,11 +242,11 @@
 
 .title {
   font-family: var(--font-playfair), serif;
-  font-size: clamp(26px, 3vw, 38px);
+  font-size: clamp(28px, 4vw, 42px);
   font-weight: 700;
   color: var(--theme-text);
-  margin: 0 0 6px;
-  line-height: 1.25;
+  margin: 0 0 8px;
+  line-height: 1.2;
 }
 
 .skuText {
@@ -471,7 +486,7 @@
   gap: 14px;
   margin-bottom: 32px;
 
-  @media (max-width: 540px) {
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
 }
@@ -540,8 +555,9 @@
   border: 1px solid var(--theme-border-color);
   margin-bottom: 36px;
 
-  @media (max-width: 540px) {
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 }
 
@@ -585,6 +601,11 @@
   overflow-x: auto;
   border-bottom: 1px solid var(--theme-border-color);
   background: var(--theme-surface);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .tabBtn {
@@ -893,6 +914,13 @@
   padding: 32px;
   box-shadow: var(--shadow-2xl);
   animation: scaleUp 0.3s var(--ease-spring);
+  max-height: 90vh;
+  overflow-y: auto;
+
+  @media (max-width: 480px) {
+    padding: 20px 16px;
+    border-radius: var(--radius-lg);
+  }
 }
 
 .modalHeader {
@@ -939,6 +967,9 @@
   border-collapse: collapse;
   margin-bottom: 24px;
   font-size: 13px;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 
   th, td {
     padding: 12px 16px;

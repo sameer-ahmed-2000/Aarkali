@@ -1,24 +1,34 @@
 import React from 'react'
 import { Metadata } from 'next'
-import { draftMode } from 'next/headers'
 
-import { Category } from '../../../payload/payload-types'
-import { fetchDocs } from '../../_api/fetchDocs'
+import { dbConnect } from '@/lib/mongoose'
+import Category from '@/models/Category'
+import Product from '@/models/Product'
 import { ProductsClientPage } from './_components/ProductsClientPage'
 
 export const dynamic = 'force-dynamic'
 
 const ProductsPage = async ({ searchParams }: { searchParams: Record<string, string | string[]> }) => {
-  const { isEnabled: isDraftMode } = draftMode()
-  let categories: Category[] | null = null
+  let categories = []
+  let products = []
 
   try {
-    categories = await fetchDocs<Category>('categories')
+    await dbConnect()
+    categories = await Category.find().lean()
+    
+    // Convert ObjectId to string for client component
+    categories = JSON.parse(JSON.stringify(categories))
+
+    // Fetch all published products
+    products = await Product.find({ status: 'published' }).populate('categories').lean()
+    
+    // Parse to simple JSON for client
+    products = JSON.parse(JSON.stringify(products))
   } catch (error) {
-    console.log(error)
+    console.error('Failed to fetch data for products page', error)
   }
 
-  return <ProductsClientPage categories={categories} searchParams={searchParams} />
+  return <ProductsClientPage categories={categories} products={products} searchParams={searchParams} />
 }
 
 export default ProductsPage

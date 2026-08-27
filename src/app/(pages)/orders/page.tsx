@@ -29,10 +29,11 @@ export default async function Orders() {
   let orders: Order[] | null = null
 
   try {
+    const { cookies } = await import('next/headers')
     orders = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `JWT ${token}`,
+        Cookie: cookies().toString(),
       },
       cache: 'no-store',
     })

@@ -23,11 +23,13 @@ export default async function Order({ params: { id } }) {
   let order: Order | null = null
 
   try {
+    const { cookies } = await import('next/headers')
     order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/${id}`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `JWT ${token}`,
+        Cookie: cookies().toString(),
       },
+      cache: 'no-store',
     })?.then(async res => {
       if (!res.ok) notFound()
       const json = await res.json()

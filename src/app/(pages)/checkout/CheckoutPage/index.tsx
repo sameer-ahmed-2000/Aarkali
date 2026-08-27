@@ -47,9 +47,13 @@ export const CheckoutPage: React.FC<{
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'razorpay'>('cod')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  
+  const [couponCode, setCouponCode] = useState<string | null>(null)
+  const [discountAmount, setDiscountAmount] = useState(0)
+  const [couponType, setCouponType] = useState<string | null>(null)
 
   const rawSubtotal = cartTotal?.raw || 0
-  const isStandardFree = rawSubtotal >= FREE_SHIPPING_THRESHOLD
+  const isStandardFree = rawSubtotal >= FREE_SHIPPING_THRESHOLD || couponType === 'freeShipping'
 
   const shippingCost =
     deliverySpeed === 'same_day'
@@ -58,7 +62,35 @@ export const CheckoutPage: React.FC<{
       ? 0
       : STANDARD_SHIPPING
 
-  const grandTotal = rawSubtotal + shippingCost
+  const grandTotal = Math.max(0, rawSubtotal + shippingCost - discountAmount)
+
+  useEffect(() => {
+    // Check local storage and also URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const savedCoupon = urlParams.get('coupon') || localStorage.getItem('appliedCoupon')
+    
+    if (savedCoupon && rawSubtotal > 0) {
+      setCouponCode(savedCoupon)
+      fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: savedCoupon, cartTotal: rawSubtotal }),
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.valid) {
+            setDiscountAmount(data.discountAmount || 0)
+            setCouponType(data.coupon?.discountType || null)
+          } else {
+            setCouponCode(null)
+            setDiscountAmount(0)
+            setCouponType(null)
+            localStorage.removeItem('appliedCoupon')
+          }
+        })
+        .catch(() => setCouponCode(null))
+    }
+  }, [rawSubtotal])
 
   useEffect(() => {
     if (user !== null && cartIsEmpty) {
@@ -82,15 +114,28 @@ export const CheckoutPage: React.FC<{
         userId: user?.id,
         items: cart?.items?.map(item => ({
           product: typeof item.product === 'object' ? item.product.id : item.product,
-          price: typeof item.product === 'object'
-            ? JSON.parse(item.product.priceJSON || '{}')?.data?.[0]?.unit_amount / 100 || 1499
-            : 1499,
+          price: (() => {
+            if (typeof item.product !== 'object' || !item.product) return 1499;
+            const prod = item.product as any;
+            if (typeof prod.price === 'number') return prod.price;
+            if (prod.priceJSON) {
+              try {
+                const parsed = JSON.parse(prod.priceJSON)?.data?.[0]?.unit_amount || 0;
+                return parsed > 10000 ? parsed / 100 : parsed;
+              } catch {
+                return 1499;
+              }
+            }
+            return 1499;
+          })(),
           quantity: item.quantity || 1,
         })),
         total: grandTotal,
         paymentMethod,
         paymentStatus: paymentMethod === 'cod' ? 'pending' : 'paid',
         deliverySchedule: deliverySpeed,
+        couponApplied: couponCode,
+        discountAmount,
         deliveryAddress: {
           fullName,
           email,
@@ -378,7 +423,21 @@ export const CheckoutPage: React.FC<{
                         <span className={classes.summaryItemTitle}>{item.product.title}</span>
                       </div>
                       <span className={classes.summaryItemPrice}>
-                        ₹{item.product.priceJSON ? Math.round((JSON.parse(item.product.priceJSON)?.data?.[0]?.unit_amount / 100 || 1499) * item.quantity).toLocaleString('en-IN') : '1,499'}
+                        ₹{(() => {
+                          let itemPrice = 1499;
+                          const prod = item.product as any;
+                          if (typeof prod?.price === 'number') {
+                            itemPrice = prod.price;
+                          } else if (prod?.priceJSON) {
+                            try {
+                              const parsed = JSON.parse(prod.priceJSON)?.data?.[0]?.unit_amount || 0;
+                              itemPrice = parsed > 10000 ? parsed / 100 : parsed;
+                            } catch {
+                              itemPrice = 1499;
+                            }
+                          }
+                          return Math.round(itemPrice * item.quantity).toLocaleString('en-IN');
+                        })()}
                       </span>
                     </div>
                   )
@@ -399,6 +458,12 @@ export const CheckoutPage: React.FC<{
                 <span>Shipping Fee</span>
                 <span>{shippingCost === 0 ? <strong className={classes.freeText}>FREE</strong> : `₹${shippingCost}`}</span>
               </div>
+              {couponCode && discountAmount > 0 && (
+                <div className={`${classes.calcRow} ${classes.discountRow}`}>
+                  <span>Coupon Discount ({couponCode})</span>
+                  <span>-₹{discountAmount.toLocaleString('en-IN')}</span>
+                </div>
+              )}
               <div className={`${classes.calcRow} ${classes.grandTotalRow}`}>
                 <span>Payable Amount</span>
                 <span className={classes.grandTotalNumber}>

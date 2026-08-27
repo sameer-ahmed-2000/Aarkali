@@ -2,7 +2,6 @@ import React from 'react'
 import { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 
-import { AdminBar } from './_components/AdminBar'
 import { Footer } from './_components/Footer'
 import { Header } from './_components/Header'
 import { Providers } from './_providers'
@@ -37,7 +36,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className={`${playfairDisplay.variable} ${inter.variable}`}>
         <Providers>
-          <AdminBar />
           {/* @ts-expect-error */}
           <Header />
           <main className="main">{children}</main>

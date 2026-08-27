@@ -30,15 +30,14 @@ const SORT_OPTIONS = [
   { value: 'popular', label: 'Most Popular' },
 ]
 
-const CATEGORY_OPTIONS = [
-  { value: '', label: 'All Collections', count: CATALOG_PRODUCTS.length },
-  { value: 'sarees', label: 'Sarees', count: CATALOG_PRODUCTS.filter(p => p.category === 'sarees').length },
-  { value: 'kurtis', label: 'Kurtis', count: CATALOG_PRODUCTS.filter(p => p.category === 'kurtis').length },
-  { value: 'lehengas', label: 'Lehengas', count: CATALOG_PRODUCTS.filter(p => p.category === 'lehengas').length },
-  { value: 'accessories', label: 'Jewellery', count: CATALOG_PRODUCTS.filter(p => p.category === 'accessories').length },
-  { value: 'dupattas', label: 'Dupattas', count: CATALOG_PRODUCTS.filter(p => p.category === 'dupattas').length },
-  { value: 'salwar-sets', label: 'Salwar Sets', count: CATALOG_PRODUCTS.filter(p => p.category === 'salwar-sets').length },
-]
+function getCategoryOptions(products: any[], categories: any[]) {
+  const base = [{ value: '', label: 'All Collections', count: products.length }]
+  categories.forEach(cat => {
+    const count = products.filter(p => p.categories?.some((c: any) => c._id === cat._id || c.slug === cat.slug)).length
+    base.push({ value: cat.slug || cat._id, label: cat.title, count })
+  })
+  return base
+}
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -55,11 +54,13 @@ function StarRating({ rating }: { rating: number }) {
   )
 }
 
-function ProductsContent() {
+function ProductsContent({ products, categories }: { products: any[], categories: any[] }) {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { addItem, removeItem, isInWishlist } = useWishlist()
   const { addItemToCart, isProductInCart } = useCart()
+
+  const CATEGORY_OPTIONS = useMemo(() => getCategoryOptions(products, categories), [products, categories])
 
   const urlCategory = searchParams.get('category') || ''
   const urlSort = searchParams.get('sort') || 'newest'
@@ -129,12 +130,19 @@ function ProductsContent() {
 
   // Filtered and sorted products
   const filtered = useMemo(() => {
-    let result = CATALOG_PRODUCTS.filter(p => {
-      if (selectedCategory && p.category !== selectedCategory) return false
-      if (showSaleOnly && !p.isSale) return false
-      if (showInStockOnly && !p.inStock) return false
-      if (p.price < priceRange[0] || p.price > priceRange[1]) return false
-      if (searchQuery && !p.name.toLowerCase().includes(searchQuery.toLowerCase()) && !p.categoryLabel.toLowerCase().includes(searchQuery.toLowerCase())) {
+    let result = products.filter(p => {
+      // Handle category filtering
+      if (selectedCategory) {
+        const hasCategory = p.categories?.some((c: any) => c.slug === selectedCategory || c._id === selectedCategory)
+        if (!hasCategory) return false
+      }
+      if (showSaleOnly && !p.salePrice) return false
+      if (showInStockOnly && p.stock <= 0) return false
+      
+      const pPrice = p.salePrice || p.price
+      if (pPrice < priceRange[0] || pPrice > priceRange[1]) return false
+      
+      if (searchQuery && !p.title.toLowerCase().includes(searchQuery.toLowerCase())) {
         return false
       }
       return true
@@ -159,17 +167,17 @@ function ProductsContent() {
     return result
   }, [selectedCategory, sortBy, priceRange, showSaleOnly, showInStockOnly, searchQuery])
 
-  const toggleWishlist = (product: CatalogProduct) => {
-    if (isInWishlist(product.id)) {
-      removeItem(product.id)
+  const toggleWishlist = (product: any) => {
+    if (isInWishlist(product._id)) {
+      removeItem(product._id)
     } else {
       addItem({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        originalPrice: product.originalPrice,
-        category: product.categoryLabel,
-        image: product.image,
+        id: product._id,
+        name: product.title,
+        price: product.salePrice || product.price,
+        originalPrice: product.price,
+        category: product.categories?.[0]?.title || 'Unknown',
+        image: product.layout?.[0]?.url || '',
       })
     }
   }
@@ -422,38 +430,41 @@ function ProductsContent() {
                 .join(' ')}
             >
               {filtered.map(product => {
-                const discount = Math.round(
-                  (1 - product.price / product.originalPrice) * 100,
-                )
-                const wishlisted = isInWishlist(product.id)
+                const pPrice = product.salePrice || product.price
+                const originalPrice = product.price
+                const discount = originalPrice && originalPrice > pPrice 
+                  ? Math.round((1 - pPrice / originalPrice) * 100)
+                  : 0
+                const wishlisted = isInWishlist(product._id)
+                const mainImage = product.layout?.[0]?.url || ''
+                const catLabel = product.categories?.[0]?.title || 'Product'
+                const inStock = product.stock > 0
 
                 return (
-                  <div key={product.id} className={classes.productCard}>
+                  <div key={product._id} className={classes.productCard}>
                     <div className={classes.productImg}>
                       <div className={classes.productImgInner}>
                         <Image
-                          src={product.image}
-                          alt={product.name}
+                          src={mainImage}
+                          alt={product.title}
                           fill
                           sizes="(max-width:768px) 50vw, 25vw"
                           className={classes.productPhoto}
                         />
                       </div>
 
-                      {product.badge && (
-                        <span
-                          className={`${classes.badge} ${classes[`badge${product.badge}`]}`}
-                        >
-                          {product.badge}
+                      {product.isFeatured && (
+                        <span className={`${classes.badge} ${classes.badgeBestseller}`}>
+                          Bestseller
                         </span>
                       )}
-                      {!product.inStock && (
+                      {!inStock && (
                         <span className={classes.outOfStock}>Out of Stock</span>
                       )}
 
                       <div className={classes.productHover}>
                         <Link
-                          href={`/products/${product.slug || product.id}`}
+                          href={`/products/${product.slug || product._id}`}
                           className={classes.quickView}
                         >
                           Quick View
@@ -482,63 +493,67 @@ function ProductsContent() {
                       </button>
                     </div>
 
-                    <div className={classes.productInfo}>
-                      <p className={classes.productCat}>{product.categoryLabel}</p>
-                      <h3 className={classes.productName}>
-                        <Link href={`/products/${product.slug || product.id}`}>
-                          {product.name}
-                        </Link>
-                      </h3>
-                      <div className={classes.productRating}>
-                        <StarRating rating={product.rating} />
-                        <span>({product.reviews})</span>
-                      </div>
-                      <div className={classes.productPrice}>
-                        <span className={classes.priceNow}>
-                          ₹{product.price.toLocaleString('en-IN')}
-                        </span>
-                        <span className={classes.priceOld}>
-                          ₹{product.originalPrice.toLocaleString('en-IN')}
-                        </span>
-                        <span className={classes.priceSave}>{discount}% off</span>
-                      </div>
-                      <div className={classes.productActions}>
-                        {isProductInCart({ id: product.id } as any) ? (
-                          <Link href="/cart" className={`${classes.addCartBtn} ${classes.inCartBtn}`}>
-                            ✓ In Bag — View Cart
+                      <div className={classes.productInfo}>
+                        <p className={classes.productCat}>{catLabel}</p>
+                        <h3 className={classes.productName}>
+                          <Link href={`/products/${product.slug || product._id}`}>
+                            {product.title}
                           </Link>
-                        ) : (
-                          <button
-                            type="button"
-                            disabled={!product.inStock}
-                            onClick={() => {
-                              addItemToCart({
-                                product: {
-                                  id: String(product.id),
-                                  title: product.name,
-                                  name: product.name,
-                                  price: product.price,
-                                  image: product.image,
-                                  meta: { image: product.image },
-                                } as any,
+                        </h3>
+                        <div className={classes.productRating}>
+                          <StarRating rating={5} />
+                          <span>(0)</span>
+                        </div>
+                        <div className={classes.productPrice}>
+                          <span className={classes.priceNow}>
+                            ₹{pPrice.toLocaleString('en-IN')}
+                          </span>
+                          {discount > 0 && (
+                            <>
+                              <span className={classes.priceOld}>
+                                ₹{originalPrice.toLocaleString('en-IN')}
+                              </span>
+                              <span className={classes.priceSave}>{discount}% off</span>
+                            </>
+                          )}
+                        </div>
+                        <div className={classes.productActions}>
+                          {isProductInCart({ id: product._id } as any) ? (
+                            <Link href="/cart" className={`${classes.addCartBtn} ${classes.inCartBtn}`}>
+                              ✓ In Bag — View Cart
+                            </Link>
+                          ) : (
+                            <button
+                              type="button"
+                              disabled={!inStock}
+                              onClick={() => {
+                                addItemToCart({
+                                  product: {
+                                    id: String(product._id),
+                                    title: product.title,
+                                    name: product.title,
+                                    price: pPrice,
+                                    image: mainImage,
+                                    meta: { image: mainImage },
+                                  } as any,
                                 quantity: 1,
                               })
                             }}
-                            className={[
-                              classes.addCartBtn,
-                              !product.inStock && classes.addCartBtnDisabled,
-                            ]
-                              .filter(Boolean)
-                              .join(' ')}
-                          >
-                            {product.inStock ? 'Add to Cart' : 'Out of Stock'}
-                          </button>
-                        )}
+                              className={[
+                                classes.addCartBtn,
+                                !inStock && classes.addCartBtnDisabled,
+                              ]
+                                .filter(Boolean)
+                                .join(' ')}
+                            >
+                              {inStock ? 'Add to Cart' : 'Out of Stock'}
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
             </div>
           )}
         </div>
@@ -547,10 +562,10 @@ function ProductsContent() {
   )
 }
 
-export function ProductsClientPage({ categories, searchParams }: { categories: Category[] | null; searchParams?: Record<string, string | string[]> }) {
+export function ProductsClientPage({ categories, products, searchParams }: { categories: any[] | null; products: any[]; searchParams?: Record<string, string | string[]> }) {
   return (
     <Suspense fallback={<div className={classes.loadingFallback}>Loading collections...</div>}>
-      <ProductsContent />
+      <ProductsContent products={products} categories={categories || []} />
     </Suspense>
   )
 }

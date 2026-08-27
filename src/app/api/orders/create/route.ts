@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-const PAYLOAD_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:8000'
+import { dbConnect } from '@/lib/mongoose'
+import Order from '@/models/Order'
+import User from '@/models/User'
+import mongoose from 'mongoose'
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,15 +26,13 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Generate a unique boutique tracking number
     const trackingId = `TRK${Date.now().toString().slice(-6)}${Math.floor(1000 + Math.random() * 9000)}`
 
-    // Prepare order document for Payload
     const orderData = {
       orderedBy: userId || null,
       total: Math.round(total),
-      items: items.map(item => ({
-        product: typeof item.product === 'object' ? item.product.id : item.product,
+      items: items.map((item: any) => ({
+        product: typeof item.product === 'object' ? item.product.id || item.product._id : item.product,
         price: item.price || 0,
         quantity: item.quantity || 1,
       })),
@@ -48,33 +48,36 @@ export async function POST(req: NextRequest) {
       discountAmount: Number(discountAmount) || 0,
     }
 
-    const payloadRes = await fetch(`${PAYLOAD_URL}/api/orders`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(req.headers.get('cookie') ? { Cookie: req.headers.get('cookie')! } : {}),
-      },
-      body: JSON.stringify(orderData),
-    })
+    await dbConnect()
 
-    if (!payloadRes.ok) {
-      const errData = await payloadRes.json().catch(() => ({}))
-      console.error('[orders/create] Payload error:', errData)
-      return NextResponse.json(
-        {
-          success: false,
-          message: errData?.errors?.[0]?.message || 'Failed to record order in database.',
-        },
-        { status: 500 },
-      )
+    let createdOrder;
+
+    if (userId) {
+      const session = await mongoose.startSession();
+      try {
+        await session.withTransaction(async () => {
+          const orderArr = await Order.create([orderData], { session });
+          createdOrder = orderArr[0];
+
+          const productIds = orderData.items.map((item: any) => item.product);
+
+          await User.findByIdAndUpdate(userId, {
+            $addToSet: { purchases: { $each: productIds } },
+            $set: { 'cart.items': [] },
+            $inc: { ordersCount: 1, totalSpent: orderData.total }
+          }, { session });
+        });
+      } finally {
+        session.endSession();
+      }
+    } else {
+      createdOrder = await Order.create(orderData);
     }
-
-    const createdOrder = await payloadRes.json()
 
     return NextResponse.json(
       {
         success: true,
-        orderId: createdOrder.doc?.id || createdOrder.id,
+        orderId: createdOrder._id,
         trackingId,
         message: 'Order created successfully!',
       },

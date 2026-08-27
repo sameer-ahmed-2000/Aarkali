@@ -4,6 +4,7 @@ import React, { useCallback, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { getSession } from 'next-auth/react'
 
 import { Button } from '../../../_components/Button'
 import { Input } from '../../../_components/Input'
@@ -35,9 +36,15 @@ const LoginForm: React.FC = () => {
     async (data: FormData) => {
       try {
         await login(data)
-        if (redirect?.current) router.push(redirect.current as string)
-        else router.push('/')
-        window.location.href = '/'
+        const session = await getSession()
+        
+        if (redirect?.current) {
+          window.location.href = redirect.current as string;
+        } else if (session?.user && (session.user as any).roles?.includes('admin')) {
+          window.location.href = '/admin';
+        } else {
+          window.location.href = '/';
+        }
       } catch (_) {
         setError('There was an error with the credentials provided. Please try again.')
       }

@@ -79,9 +79,10 @@ export const CartPage: React.FC<{
 
       const data = await res.json()
 
-      if (res.ok && data.valid) {
+      if (res.ok && data.success) {
         setCouponResult(data)
         setCouponCode('')
+        localStorage.setItem('appliedCoupon', data.coupon.code)
       } else {
         setCouponError(data.message || 'Invalid or expired coupon code.')
         setCouponResult(null)
@@ -96,6 +97,7 @@ export const CartPage: React.FC<{
   const handleRemoveCoupon = () => {
     setCouponResult(null)
     setCouponError(null)
+    localStorage.removeItem('appliedCoupon')
   }
 
   if (!hasInitializedCart) {
@@ -279,7 +281,7 @@ export const CartPage: React.FC<{
             {/* Checkout Action */}
             <div className={classes.checkoutAction}>
               <Link
-                href={user ? '/checkout' : '/login?redirect=%2Fcheckout'}
+                href={user ? `/checkout${couponResult ? `?coupon=${couponResult.coupon?.code}` : ''}` : `/login?redirect=%2Fcheckout${couponResult ? `%3Fcoupon%3D${couponResult.coupon?.code}` : ''}`}
                 className={classes.checkoutButton}
               >
                 {user ? 'Proceed to Checkout' : 'Login & Checkout'}

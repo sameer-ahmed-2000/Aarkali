@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-const PAYLOAD_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:8000'
+import { dbConnect } from '@/lib/mongoose'
+import Order from '@/models/Order'
 
 export async function GET(req: NextRequest) {
   try {
@@ -15,24 +15,15 @@ export async function GET(req: NextRequest) {
       )
     }
 
-    let query = ''
+    let query: any = {}
     if (orderId) {
-      query = `where[id][equals]=${orderId}`
+      query._id = orderId
     } else {
-      query = `where[trackingId][equals]=${encodeURIComponent(trackingId!)}`
+      query.trackingId = trackingId
     }
 
-    const res = await fetch(`${PAYLOAD_URL}/api/orders?${query}&limit=1`, {
-      cache: 'no-store',
-      headers: { 'Content-Type': 'application/json' },
-    })
-
-    if (!res.ok) {
-      return NextResponse.json({ success: false, message: 'Unable to fetch order.' }, { status: 500 })
-    }
-
-    const data = await res.json()
-    const order = data?.docs?.[0]
+    await dbConnect()
+    const order = await Order.findOne(query)
 
     if (!order) {
       return NextResponse.json(
@@ -41,14 +32,13 @@ export async function GET(req: NextRequest) {
       )
     }
 
-    // Build a safe, public-facing response (no sensitive financial data)
     const statusTimeline = buildStatusTimeline(order)
 
     return NextResponse.json(
       {
         success: true,
         order: {
-          id: order.id,
+          id: order._id,
           orderedOn: order.createdAt,
           status: order.status || 'pending',
           trackingId: order.trackingId || null,
@@ -69,7 +59,6 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// Build a chronological status timeline based on order status
 function buildStatusTimeline(order: any) {
   const allSteps = [
     { key: 'placed', label: 'Order Placed', description: 'Your order has been placed successfully.' },
