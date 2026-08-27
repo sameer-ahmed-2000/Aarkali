@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Cashfree } from 'cashfree-pg';
+import { Cashfree, CFEnvironment } from 'cashfree-pg';
 import { dbConnect } from '@/lib/mongoose';
 import Order from '@/models/Order';
 
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     Cashfree.XClientId = process.env.CASHFREE_APP_ID!;
     Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY!;
-    Cashfree.XEnvironment = process.env.NODE_ENV === 'production' ? Cashfree.Environment.PRODUCTION : Cashfree.Environment.SANDBOX;
+    Cashfree.XEnvironment = process.env.NODE_ENV === 'production' ? CFEnvironment.PRODUCTION : CFEnvironment.SANDBOX;
 
     try {
       Cashfree.PGVerifyWebhookSignature(signature, rawBody, timestamp);
