@@ -12,12 +12,13 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
+import { DeleteButton } from '../_components/DeleteButton'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AdminProductsPage() {
   await dbConnect()
-  const products = await Product.find().sort({ createdAt: -1 })
+  const products = await Product.find().sort({ createdAt: -1 }).lean()
 
   return (
     <div className="space-y-6">
@@ -66,9 +67,7 @@ export default async function AdminProductsPage() {
                           <Edit className="w-4 h-4" />
                         </Button>
                       </Link>
-                      <Button variant="destructive" size="icon">
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
+                      <DeleteButton id={product._id.toString()} endpoint="products" />
                     </div>
                   </TableCell>
                 </TableRow>

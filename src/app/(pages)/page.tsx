@@ -1,7 +1,7 @@
 import React from 'react'
 import { Metadata } from 'next'
 
-import { HomePage } from './_components/HomePage'
+import { HomePage } from '../_components/HomePage'
 
 export const dynamic = 'force-dynamic'
 

@@ -2,8 +2,6 @@ import React from 'react'
 import { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 
-import { Footer } from './_components/Footer'
-import { Header } from './_components/Header'
 import { Providers } from './_providers'
 import { InitTheme } from './_providers/Theme/InitTheme'
 import { mergeOpenGraph } from './_utilities/mergeOpenGraph'
@@ -36,11 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className={`${playfairDisplay.variable} ${inter.variable}`}>
         <Providers>
-          {/* @ts-expect-error */}
-          <Header />
-          <main className="main">{children}</main>
-          {/* @ts-expect-error */}
-          <Footer />
+          {children}
         </Providers>
       </body>
     </html>

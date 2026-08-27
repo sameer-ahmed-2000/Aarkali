@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 
 export default async function EditProductPage({ params }: { params: { id: string } }) {
   await dbConnect()
-  const product = await Product.findById(params.id)
+  const product = await Product.findById(params.id).lean()
   
   if (!product) notFound()
 

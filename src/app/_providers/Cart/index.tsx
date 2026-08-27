@@ -76,7 +76,7 @@ export const CartProvider = props => {
           const initialCart = await Promise.all(
             parsedCart.items.map(async ({ product, quantity }) => {
               const res = await fetch(
-                `${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/${product}`,
+                `/api/products/${product}`,
               )
               const data = await res.json()
               return {
@@ -156,7 +156,7 @@ export const CartProvider = props => {
     if (user) {
       try {
         const syncCartToPayload = async () => {
-          const req = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${user.id}`, {
+          const req = await fetch(`/api/users/${user.id}`, {
             // Make sure to include cookies with fetch
             credentials: 'include',
             method: 'PATCH',

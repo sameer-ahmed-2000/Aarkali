@@ -57,13 +57,20 @@ export function Sidebar({ isOpen, onClose }: { isOpen?: boolean; onClose?: () =>
         })}
       </nav>
       
-      <div className="p-4 mt-auto border-t">
+      <div className="p-4 mt-auto border-t space-y-2">
         <Link
           href="/"
           className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
         >
+          <ShoppingCart size={20} />
+          <span className="font-medium">Go to Storefront</span>
+        </Link>
+        <Link
+          href="/logout"
+          className="flex items-center gap-3 px-3 py-2 rounded-md text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+        >
           <LogOut size={20} />
-          <span className="font-medium">Exit Admin</span>
+          <span className="font-medium">Log out</span>
         </Link>
       </div>
       </aside>

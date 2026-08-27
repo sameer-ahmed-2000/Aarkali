@@ -12,6 +12,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
+import { DeleteButton } from '../_components/DeleteButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -56,9 +57,7 @@ export default async function AdminCategoriesPage() {
                           <Edit className="w-4 h-4" />
                         </Button>
                       </Link>
-                      <Button variant="destructive" size="icon">
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
+                      <DeleteButton id={category._id.toString()} endpoint="categories" />
                     </div>
                   </TableCell>
                 </TableRow>
